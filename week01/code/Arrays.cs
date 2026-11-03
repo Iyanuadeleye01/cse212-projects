@@ -8,12 +8,28 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        
+        //Step1: Receive the starting number and the number of multiple to generate
+        //Step2: Create a new array with size equal number of multiple to generate
+        //Step3: Loop through the array using a for loop
+        //Step4: For each iteration multiply the starting number its position(index+1)
+        //Step5: Store the calculated multiple in the array at the current index
+        //Final step: Return the completed array.
+        
+        //Create a new array and the number of multiple to generate
+        double[] multiples = new double[length];
 
-        return []; // replace this return statement with your own
+        //Loop through each position in the array
+        for(int i =0; i < length; i++)
+        {
+            //Multiply starting number by the current loop number (index + 1) and store it in the array
+            multiples[i] = number * (i + 1);
+
+        }
+
+
+        //Returne the completed array
+        return multiples; // replace this return statement with your own
     }
 
     /// <summary>
@@ -25,9 +41,33 @@ public static class Arrays
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
-    }
+            
+
+        // 1. Calculate the index where the elements that need to move
+        //    to the beginning of the list start.
+
+        // 2. Get the elements from that index to the end of the list
+        //    and store them in a temporary list.
+
+        // 3. Remove those elements from the original list.
+
+        // 4. Add the temporary list to the beginning of the original list.
+
+        // 5. The original list should now be rotated to the right
+        //    by the requested amount.
+
+        // To calculate the index
+        int startIndex = data.Count - amount;
+
+        // To get the elements from them and store them in a temporary list
+        List<int> lastNumbers = data.GetRange(startIndex, amount);
+
+        // To remove the elements from the original list
+        data.RemoveRange(startIndex, amount);
+
+        //To add the temporary list 
+        data.InsertRange(0, lastNumbers);
+
+    }    
+
 }
