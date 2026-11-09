@@ -12,6 +12,9 @@ public class TakingTurnsQueueTests
     // run until the queue is empty
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
     // Defect(s) Found: 
+    // The Enqueue method inserts people at index 0 instead of adding them
+    // to the end of the queue. This causes the queue to behave like a
+    // LIFO stack instead of a FIFO queue. The expected order is not maintained.
     public void TestTakingTurnsQueue_FiniteRepetition()
     {
         var bob = new Person("Bob", 2);
@@ -44,6 +47,9 @@ public class TakingTurnsQueueTests
     // After running 5 times, add George with 3 turns.  Run until the queue is empty.
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, George, Sue, Tim, George, Tim, George
     // Defect(s) Found: 
+    // The Enqueue method adds new people to the front instead of the back
+    // of the queue. This causes the wrong playing order when George is added.
+    // The queue must follow FIFO rules to maintain the expected order.
     public void TestTakingTurnsQueue_AddPlayerMidway()
     {
         var bob = new Person("Bob", 2);
@@ -85,7 +91,11 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Bob (2), Tim (Forever), Sue (3)
     // Run 10 times.
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
-    // Defect(s) Found: 
+    // Defect(s) Found:
+    // The Enqueue method inserts people at the front instead of the back,
+    // causing the wrong playing order. Also, GetNextPerson does not return
+    // people with zero turns to the queue. People with zero turns must
+    // remain in the queue forever without their Turns value being modified.
     public void TestTakingTurnsQueue_ForeverZero()
     {
         var timTurns = 0;
@@ -116,7 +126,11 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Tim (Forever), Sue (3)
     // Run 10 times.
     // Expected Result: Tim, Sue, Tim, Sue, Tim, Sue, Tim, Tim, Tim, Tim
-    // Defect(s) Found: 
+    // Defect(s) Found:
+    // The Enqueue method inserts people at the front instead of the back.
+    // Also, GetNextPerson does not return people with negative turns to
+    // the queue. People with negative turns must remain in the queue
+    // forever without their Turns value being modified.
     public void TestTakingTurnsQueue_ForeverNegative()
     {
         var timTurns = -3;
@@ -143,7 +157,10 @@ public class TakingTurnsQueueTests
     [TestMethod]
     // Scenario: Try to get the next person from an empty queue
     // Expected Result: Exception should be thrown with appropriate error message.
-    // Defect(s) Found: 
+    // Defect(s) Found:
+    // No defect found. GetNextPerson correctly checks whether the queue
+    // is empty and throws InvalidOperationException with the message
+    // "No one in the queue." 
     public void TestTakingTurnsQueue_Empty()
     {
         var players = new TakingTurnsQueue();

@@ -40,12 +40,20 @@ public class TakingTurnsQueue
         else
         {
             Person person = _people.Dequeue();
-            if (person.Turns > 1)
+
+            //People with zero or negative turns player forever
+            if (person.Turns <=0)
             {
-                person.Turns -= 1;
                 _people.Enqueue(person);
             }
 
+            //People with more than one turn have another turn
+            else if (person.Turns > 1)
+            {
+                person.Turns--;
+                _people.Enqueue(person);
+            }
+            //Peopele with exactly one turn leave the queue
             return person;
         }
     }
