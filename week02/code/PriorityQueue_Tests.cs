@@ -42,6 +42,7 @@ public class PriorityQueueTests
         priorityQueue.Enqueue("Peter", 5);
 
         var result = priorityQueue.Dequeue();
+        
 
 
         Assert.AreEqual("John", result);

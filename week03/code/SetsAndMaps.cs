@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.VisualBasic;
 
 public static class SetsAndMaps
 {
@@ -22,7 +23,25 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+
+        var wordsSeen = new HashSet<string>();
+        var pairs = new List<string>();
+
+        foreach (var word in words)
+        {
+            // Reverse the current word
+            var reversed = $"{word[1]}{word[0]}";
+
+            // Check whether the reversed word has been seen
+            if (wordsSeen.Contains(reversed))
+            {
+                pairs.Add($"{reversed} & {word}");
+            }
+
+            // Remember the current word
+            wordsSeen.Add(word);
+        }
+        return pairs.ToArray();
     }
 
     /// <summary>
@@ -43,6 +62,16 @@ public static class SetsAndMaps
         {
             var fields = line.Split(",");
             // TODO Problem 2 - ADD YOUR CODE HERE
+            var degree = fields[3];
+
+            if (degrees.ContainsKey(degree))
+            {
+                degrees[degree] ++;
+            }
+            else
+            {
+                degrees[degree] = 1;
+            }
         }
 
         return degrees;
@@ -67,7 +96,58 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+        var letters = new Dictionary<char, int>();
+
+        foreach (var letter in word1)
+        {
+            if (letter == ' ')
+            {
+                continue;
+            }
+
+            var lowerLetter = char.ToLower(letter);
+
+            if (letters.ContainsKey(lowerLetter))
+            {
+                letters[lowerLetter]++;
+            }
+            else
+            {
+                letters[lowerLetter] = 1;
+            }
+        }
+
+        foreach (var letter in word2)
+        {
+            if (letter == ' ')
+            {
+                continue;
+            }
+
+            var lowerLetter = char.ToLower(letter);
+
+            if (!letters.ContainsKey(lowerLetter))
+            {
+                return false;
+            }
+
+            letters[lowerLetter]--;
+
+            if (letters[lowerLetter] < 0)
+            {
+                return false;
+            }
+        }
+
+        foreach (var count in letters.Values)
+        {
+            if (count != 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /// <summary>
